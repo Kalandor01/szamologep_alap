@@ -27,7 +27,7 @@ function init()
     query("#kivonas").onclick = clicked_muvjel;
     query("#szorzas").onclick = clicked_muvjel;
     query("#osztas").onclick = clicked_muvjel;
-    query("#dot").onclick = clicked_num;
+    query("#dot").onclick = clicked_dot;
     query("#egyenlo").onclick = egyenlo;
     query("#torles").onclick = clear;
 }
@@ -39,28 +39,40 @@ function clicked_num(evt)
     query(".kijelzo .kifejezes").innerHTML += evt.target.innerHTML;
 }
 
+function clicked_dot(evt)
+{
+    let last_jel = query(".kijelzo .kifejezes").innerHTML.slice(-1);
+    if(last_jel != "+" && last_jel != "-" && last_jel != "*" && last_jel != "/" && last_jel != "." && last_jel != "=")
+        query(".kijelzo .kifejezes").innerHTML += evt.target.innerHTML;
+}
+
 function clicked_muvjel(evt)
 {
-    if(query(".kijelzo .eredmeny").innerHTML.replace("<br>", "") != "")
+    let last_jel = query(".kijelzo .kifejezes").innerHTML.slice(-1);
+    if(last_jel != "+" && last_jel != "-" && last_jel != "*" && last_jel != "/" && last_jel != "." && last_jel != "=")
     {
-        query(".kijelzo .kifejezes").innerHTML = query(".kijelzo .eredmeny").innerHTML.replace("<br>", "");
-        shows_ans = false;
-        query(".kijelzo .eredmeny").innerHTML = "";
-        query(".kijelzo .kifejezes").innerHTML += evt.target.innerHTML;
-        muvjel = evt.target.innerHTML;
-        console.log(query(".kijelzo .kifejezes").innerHTML + "\nMűvjel: " + muvjel);
-    }
-    else if(query(".kijelzo .kifejezes").innerHTML != "")
-    {
-        query(".kijelzo .kifejezes").innerHTML += evt.target.innerHTML;
-        muvjel = evt.target.innerHTML;
-        console.log(query(".kijelzo .kifejezes").innerHTML + "\nMűvjel: " + muvjel);
+        if(query(".kijelzo .eredmeny").innerHTML.replace("<br>", "") != "")
+        {
+            query(".kijelzo .kifejezes").innerHTML = query(".kijelzo .eredmeny").innerHTML.replace("<br>", "");
+            shows_ans = false;
+            query(".kijelzo .eredmeny").innerHTML = "";
+            query(".kijelzo .kifejezes").innerHTML += evt.target.innerHTML;
+            muvjel = evt.target.innerHTML;
+            console.log(query(".kijelzo .kifejezes").innerHTML + "\nMűvjel: " + muvjel);
+        }
+        else if(query(".kijelzo .kifejezes").innerHTML != "")
+        {
+            query(".kijelzo .kifejezes").innerHTML += evt.target.innerHTML;
+            muvjel = evt.target.innerHTML;
+            console.log(query(".kijelzo .kifejezes").innerHTML + "\nMűvjel: " + muvjel);
+        }
     }
 }
 
 function egyenlo(evt)
 {
-    if(query(".kijelzo .kifejezes").innerHTML != "" && !shows_ans)
+    let last_jel = query(".kijelzo .kifejezes").innerHTML.slice(-1);
+    if(query(".kijelzo .kifejezes").innerHTML != "" && !shows_ans && last_jel != "+" && last_jel != "-" && last_jel != "*" && last_jel != "/" && last_jel != "." && last_jel != "=")
     {
         let numbers = query(".kijelzo .kifejezes").innerHTML.split(/\/|\*|\+|\-/);
         let muvjelek_raw = query(".kijelzo .kifejezes").innerHTML.split(/\d|\./);
