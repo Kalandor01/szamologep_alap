@@ -13,6 +13,7 @@ function query_all(name, arg) {
 }
 
 var muvjel = null;
+var shows_ans = false;
 
 function init()
 {
@@ -21,12 +22,12 @@ function init()
         query(".szamok").innerHTML += `<button>${x}</button>`;
     }
     query_all(".szamok button", q=>q.onclick = clicked_num);
-    //muvel buttons
+    //numbers buttons
     query("#osszeadas").onclick = clicked_muvjel;
     query("#kivonas").onclick = clicked_muvjel;
     query("#szorzas").onclick = clicked_muvjel;
     query("#osztas").onclick = clicked_muvjel;
-    query("#dot").onclick = clicked_muvjel;
+    query("#dot").onclick = clicked_num;
     query("#egyenlo").onclick = egyenlo;
     query("#torles").onclick = clear;
 }
@@ -40,9 +41,10 @@ function clicked_num(evt)
 
 function clicked_muvjel(evt)
 {
-    if(query(".kijelzo .eredmeny").innerHTML != "")
+    if(query(".kijelzo .eredmeny").innerHTML.replace("<br>", "") != "")
     {
-        query(".kijelzo .kifejezes").innerHTML = query(".kijelzo .eredmeny").innerHTML;
+        query(".kijelzo .kifejezes").innerHTML = query(".kijelzo .eredmeny").innerHTML.replace("<br>", "");
+        shows_ans = false;
         query(".kijelzo .eredmeny").innerHTML = "";
         query(".kijelzo .kifejezes").innerHTML += evt.target.innerHTML;
         muvjel = evt.target.innerHTML;
@@ -58,31 +60,38 @@ function clicked_muvjel(evt)
 
 function egyenlo(evt)
 {
-    if(query(".kijelzo .kifejezes").innerHTML != "")
+    if(query(".kijelzo .kifejezes").innerHTML != "" && !shows_ans)
     {
-        let muvel = query(".kijelzo .kifejezes").innerHTML.split(muvjel);
+        let numbers = query(".kijelzo .kifejezes").innerHTML.split(/\/|\*|\+|\-/);
+        let muvjelek_raw = query(".kijelzo .kifejezes").innerHTML.split(/\d|\./);
+        let muvjelek = []
+        muvjelek_raw.forEach(jel => {
+            if(jel!="")
+                muvjelek.push(jel);
+        });
         query(".kijelzo .kifejezes").innerHTML += evt.target.innerHTML;
-        console.log(muvel);
+        console.log(numbers + "\n" + muvjelek);
         let eredmeny = 0;
         switch (muvjel)
         {
             case "+":
-                eredmeny = parseFloat(muvel[0]) + parseFloat(muvel[1]);
+                eredmeny = parseFloat(numbers[0]) + parseFloat(numbers[1]);
                 break;
             case "-":
-                eredmeny = parseFloat(muvel[0]) - parseFloat(muvel[1]);
+                eredmeny = parseFloat(numbers[0]) - parseFloat(numbers[1]);
                 break;
             case "*":
-                eredmeny = parseFloat(muvel[0]) * parseFloat(muvel[1]);
+                eredmeny = parseFloat(numbers[0]) * parseFloat(numbers[1]);
                 break;
             case "/":
-                eredmeny = parseFloat(muvel[0]) / parseFloat(muvel[1]);
+                eredmeny = parseFloat(numbers[0]) / parseFloat(numbers[1]);
                 break;
             default:
-                eredmeny = muvel[0];
+                eredmeny = numbers[0];
                 break;
         }
-        query(".kijelzo .eredmeny").innerHTML += eredmeny;
+        query(".kijelzo .eredmeny").innerHTML = "<br>" + eredmeny;
+        shows_ans = true;
     }
 }
 
@@ -91,4 +100,5 @@ function clear()
     query(".kijelzo .kifejezes").innerHTML = "";
     muvjel = null;
     query(".kijelzo .eredmeny").innerHTML = "";
+    shows_ans = false;
 }

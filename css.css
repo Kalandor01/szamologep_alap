@@ -1,3 +1,9 @@
+
+main, header, article, footer {
+    padding: 5px;
+    border: solid 1px black;
+}
+
 main {
     max-width: 200px;
     text-align: center;
@@ -14,10 +20,11 @@ article {
     grid-gap: 5px;
 }
 .kijelzo {
+    overflow-wrap: break-word;
     grid-area: kij;
     border: 1px solid gray;
     border-radius: 8px;
-    height: 30px;
+    min-height: 30px;
     text-align: left;
     font-weight: bold;
     padding: 5px;
