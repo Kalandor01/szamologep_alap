@@ -58,13 +58,11 @@ function clicked_muvjel(evt)
             query(".kijelzo .eredmeny").innerHTML = "";
             query(".kijelzo .kifejezes").innerHTML += evt.target.innerHTML;
             muvjel = evt.target.innerHTML;
-            console.log(query(".kijelzo .kifejezes").innerHTML + "\nMűvjel: " + muvjel);
         }
         else if(query(".kijelzo .kifejezes").innerHTML != "")
         {
             query(".kijelzo .kifejezes").innerHTML += evt.target.innerHTML;
             muvjel = evt.target.innerHTML;
-            console.log(query(".kijelzo .kifejezes").innerHTML + "\nMűvjel: " + muvjel);
         }
     }
 }
@@ -74,6 +72,7 @@ function egyenlo(evt)
     let last_jel = query(".kijelzo .kifejezes").innerHTML.slice(-1);
     if(query(".kijelzo .kifejezes").innerHTML != "" && !shows_ans && last_jel != "+" && last_jel != "-" && last_jel != "*" && last_jel != "/" && last_jel != "." && last_jel != "=")
     {
+        //get stuff
         let numbers = query(".kijelzo .kifejezes").innerHTML.split(/\/|\*|\+|\-/);
         let muvjelek_raw = query(".kijelzo .kifejezes").innerHTML.split(/\d|\./);
         let muvjelek = []
@@ -81,9 +80,11 @@ function egyenlo(evt)
             if(jel!="")
                 muvjelek.push(jel);
         });
+        //
         query(".kijelzo .kifejezes").innerHTML += evt.target.innerHTML;
         console.log(numbers + "\n" + muvjelek);
         let eredmeny = 0;
+        let resz_e = "";
         switch (muvjel)
         {
             case "+":
