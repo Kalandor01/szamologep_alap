@@ -49,7 +49,7 @@ function clicked_dot(evt)
 function clicked_muvjel(evt)
 {
     let last_jel = query(".kijelzo .kifejezes").innerHTML.slice(-1);
-    if(last_jel != "+" && last_jel != "-" && last_jel != "*" && last_jel != "/" && last_jel != "." && last_jel != "=")
+    if(last_jel != "+" && last_jel != "-" && last_jel != "*" && last_jel != "/" && last_jel != ".")
     {
         if(query(".kijelzo .eredmeny").innerHTML.replace("<br>", "") != "")
         {
